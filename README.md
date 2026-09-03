@@ -25,19 +25,19 @@
      `jutouAI/Resources/legal-privacy.html` / `legal-terms.html` 本地副本，内容已与本目录一致；
      如需改成跳转线上版，改 `LegalWebViewController` 用 `WKWebView` 加载该 URL 即可）。
 
-## ⚠️ 上线前必须替换的占位
+## 占位替换（已全部填写，如需变更按此清单改）
 
-文中所有黄色 `占位` 标记（`<span class="placeholder">`）都要替换成真实值，并把占位的样式类去掉：
+以下值已写入 `privacy.html` / `terms.html` / App 内嵌 `legal-*.html`：
 
-- **开发者 / 运营方名称**：与 App Store Connect 上的销售者名称一致
-- **联系邮箱**：隐私相关 `privacy@…`、支持相关 `support@…`（可为同一个）
-- **所在地 / 国家地区**
-- **生效日期 / 最近更新日期**：正式提交那天的日期
-- **云服务提供商名称**：后端实际托管商（阿里云 / AWS / …）
-- **大模型服务商**：目前为 DeepSeek（深度求索），服务器位于中华人民共和国；如更换需同步改
-- **DeepSeek 隐私政策链接**：填其官网隐私政策页地址
-- **数据保留天数**：服务日志滚动清除周期（默认写了 30 天）、请求响应时限（默认 15 个工作日）
-- **适用法律与管辖机构**（`terms.html` 第 12 节）：建议咨询法律顾问确定
+- **开发者 / 运营方名称**：剧透AI团队
+- **联系邮箱**：beyondbyterminal@gmail.com
+- **所在地**：中国 / 山东
+- **生效日期 / 最近更新日期**：2026 年 9 月 3 日
+- **云服务提供商**：AWS
+- **大模型服务商**：DeepSeek（杭州深度求索人工智能基础技术研究有限公司），服务器位于中华人民共和国；隐私政策 中文 https://cdn.deepseek.com/policies/zh-CN/deepseek-privacy-policy.html ，英文 https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html
+- **服务日志滚动清除周期**：30 天；**请求响应时限**：15 个工作日
+- **适用法律与管辖**（terms.html 第 12 节）：适用中华人民共和国法律，由开发者所在地（山东省）有管辖权的人民法院管辖，并保留用户所在地强制性消费者保护规定的优先适用条款
+
 
 ## 建议
 
