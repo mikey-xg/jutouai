@@ -36,7 +36,7 @@
     <li><a href="#collect">我们收集的信息</a></li>
     <li><a href="#use">我们如何使用信息</a></li>
     <li><a href="#share">信息的对外共享与第三方</a></li>
-    <li><a href="#ai">AI 选剧功能与跨境数据传输</a></li>
+    <li><a href="#ai">AI 选剧功能与数据处理</a></li>
     <li><a href="#store">数据的存储与安全</a></li>
     <li><a href="#retention">数据保留与删除</a></li>
     <li><a href="#push">本地推送通知</a></li>
@@ -86,7 +86,7 @@
   <tr><td>追剧数据</td><td>展示片单与打卡进度；生成「已追剧 X 部」「连续打卡 X 天」等统计；驱动每周更新日历的进度显示</td><td>仅在你的设备本地</td></tr>
   <tr><td>更新提醒开关</td><td>决定是否在剧集更新日通过设备本地通知提醒你</td><td>仅在你的设备本地</td></tr>
   <tr><td>正在追的剧集 ID</td><td>即时计算当周更新排期后返回给本应用</td><td>发送至服务器，不存储</td></tr>
-  <tr><td>AI 选剧输入文本</td><td>发送至第三方大模型服务以生成剧集推荐结果（见第 4 节）</td><td>经我们服务器转发至第三方</td></tr>
+  <tr><td>AI 选剧输入文本</td><td>用于生成剧集推荐结果（见第 4 节）</td><td>由我们在 AWS 上运行的托管大模型服务（Amazon Bedrock）处理</td></tr>
   <tr><td>服务日志</td><td>安全防护、滥用防范、故障排查</td><td>我们的服务器，定期清除</td></tr>
 </table>
 <p>我们<strong>不会</strong>将上述信息用于自动化决策画像、精准广告投放，或出于与本应用功能无关的目的。</p>
@@ -94,26 +94,25 @@
 <h2 id="share">3. 信息的对外共享与第三方</h2>
 <p>我们不出售、不出租你的个人信息。仅在以下情形我们会与第三方共享必要信息：</p>
 <ul>
-  <li><strong>大模型服务提供商</strong>：为实现「AI 选剧」，你输入的查询文本会发送至第三方大语言模型服务。详见<a href="#ai">第 4 节</a>。</li>
-  <li><strong>基础设施服务商</strong>：提供剧集资料、AI 选剧、每周日历的后端服务及数据库托管于 AWS。它们按照我们的指示处理数据，仅用于提供计算与存储等基础设施能力，不得为自身目的使用。</li>
+  <li><strong>基础设施与模型服务商（AWS）</strong>：提供剧集资料、AI 选剧、每周日历的后端服务及数据库托管于 Amazon Web Services（AWS）；「AI 选剧」的推荐结果由 AWS 的托管大模型服务 <strong>Amazon Bedrock</strong> 生成（详见<a href="#ai">第 4 节</a>）。AWS 按照我们的指示处理数据，仅用于提供计算、存储与模型推理能力，不得为自身目的使用。</li>
   <li><strong>法律要求</strong>：当法律法规、司法或行政机关依法要求时，我们可能披露必要信息。</li>
   <li><strong>业务转让</strong>：如发生合并、收购或资产转让，你的信息可能作为交易的一部分被转移，我们将要求接收方继续遵守本政策的保护标准，并提前告知你。</li>
 </ul>
 
-<h2 id="ai">4. AI 选剧功能与跨境数据传输</h2>
+<h2 id="ai">4. AI 选剧功能与数据处理</h2>
 <div class="callout">
-  <strong>重要提示：</strong>当你使用「AI 选剧」时，你输入的查询文本会通过我们的服务器转发给第三方大语言模型服务提供商
-  <strong>DeepSeek（杭州深度求索人工智能基础技术研究有限公司）</strong>
-  用于生成剧集推荐结果。该服务提供商的服务器位于
-  <strong>中华人民共和国</strong>，因此若你身处其他国家或地区，这一处理将构成<strong>数据的跨境传输</strong>。
+  <strong>说明：</strong>当你使用「AI 选剧」时，你输入的查询文本会通过我们的服务器发送给
+  <strong>Amazon Bedrock</strong>（Amazon Web Services 提供的托管大模型服务，当前使用 Anthropic Claude 模型）
+  用于生成剧集推荐结果。该服务运行在我们选定的
+  <strong>AWS 美国区域</strong>；因此若你身处其他国家或地区，这一处理将构成数据向美国的跨境传输。
 </div>
 <ul>
   <li>发送的内容<strong>仅为你本次输入的查询文本</strong>（在追问场景下可能包含前几轮对话文本以补全上下文）。本应用没有账号体系，发送内容<strong>不包含</strong>任何账号、用户 ID 或可直接识别你身份的信息。</li>
-  <li>该第三方对所接收文本的处理受其自身隐私政策约束：中文 <a href="https://cdn.deepseek.com/policies/zh-CN/deepseek-privacy-policy.html">https://cdn.deepseek.com/policies/zh-CN/deepseek-privacy-policy.html</a>；English <a href="https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html">https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html</a>。</li>
-  <li>我们不会在服务器上长期存储 AI 选剧的输入文本用于分析；对话记录仅保存在你的设备本地。</li>
+  <li>Amazon Bedrock <strong>不存储</strong>你的输入与输出，也<strong>不将其用于训练模型</strong>；我们的服务器同样不长期留存 AI 选剧的输入文本用于分析。</li>
+  <li>对话记录仅保存在你的设备本地。</li>
   <li><strong>请不要在「AI 选剧」中输入任何个人敏感信息</strong>（如真实姓名、联系方式、证件号、位置等）。</li>
 </ul>
-<p>如果你不希望发生上述数据传输，请不要使用「AI 选剧」功能；本应用的其余功能（浏览、片单、打卡、日历、提醒）均可正常使用。</p>
+<p>如果你不希望发生上述数据处理，请不要使用「AI 选剧」功能；本应用的其余功能（浏览、片单、打卡、日历、提醒）均可正常使用。</p>
 
 <h2 id="store">5. 数据的存储与安全</h2>
 <ul>
@@ -128,7 +127,7 @@
   <li>本应用没有账号。你的追剧数据与 AI 对话记录全部保存在本机，只要你不主动删除就会一直保留。</li>
   <li>本应用在「<strong>设置 → 清空本地数据</strong>」中提供一键删除。确认后，我们将<strong>永久删除</strong>你的片单、打卡记录及 AI 对话记录，该操作<strong>不可恢复</strong>；卸载应用同样会一并删除。</li>
   <li>出于安全审计与法律合规目的，服务日志中可能残留的技术记录会在常规滚动周期内（一般不超过 30 天）自动清除。</li>
-  <li>已发送至第三方大模型服务的历史查询文本的删除，受该第三方的数据保留政策约束。</li>
+  <li>「AI 选剧」的查询文本发送给 Amazon Bedrock 后不被其存储，我们的服务器也不长期留存，因此无需单独删除。</li>
 </ul>
 
 <h2 id="push">7. 本地推送通知</h2>
